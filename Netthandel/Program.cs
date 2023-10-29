@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using Netthandel.Data;
+using Netthandel.DataAccess.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
