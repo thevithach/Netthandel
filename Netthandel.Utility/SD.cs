@@ -1,4 +1,4 @@
-namespace Bulky.Utility;
+namespace Netthandel.Utility;
 //Static Details
 public static class SD
 {

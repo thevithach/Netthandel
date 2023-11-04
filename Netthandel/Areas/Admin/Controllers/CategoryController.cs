@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Mvc;
-using Netthandel.DataAccess.Data;
 using Netthandel.DataAccess.Repository.IRepository;
 using Netthandel.Models;
 
