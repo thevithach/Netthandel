@@ -1,9 +1,11 @@
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Netthandel.Models;
 
 namespace Netthandel.DataAccess.Data;
 
-public class ApplicationDbContext : DbContext //Arver fra DbContext klassen bygd inn i EF Core
+public class ApplicationDbContext : IdentityDbContext<IdentityUser> //Arver fra DbContext klassen bygd inn i EF Core
 {
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
     {
@@ -11,9 +13,10 @@ public class ApplicationDbContext : DbContext //Arver fra DbContext klassen bygd
     }
     public DbSet<Category> Categories { get; set; }
     public DbSet<Product> Products { get; set; }
-
+    public DbSet<ApplicationUser> ApplicationUsers { get; set; }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        base.OnModelCreating(modelBuilder);
         modelBuilder.Entity<Category>().HasData(
             new Category { Id = 1, Name = "Action", DisplayOrder = 1 },
             new Category { Id = 2, Name = "SciFi", DisplayOrder = 2 },
