@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Netthandel.DataAccess.Data;
 
@@ -11,9 +12,11 @@ using Netthandel.DataAccess.Data;
 namespace Netthandel.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231106164024_AddCompanyTable")]
+    partial class AddCompanyTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -300,38 +303,6 @@ namespace Netthandel.DataAccess.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Companies");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            City = "Kristiansand",
-                            Name = "Vivid Books",
-                            PhoneNumber = "12345678",
-                            PostalCode = "4611",
-                            State = "Agder",
-                            StreetAddress = "Gahba Street 1"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            City = "Oslo",
-                            Name = "Tech Solution",
-                            PhoneNumber = "87654321",
-                            PostalCode = "0011",
-                            State = "OsloFylke",
-                            StreetAddress = "Lahmoot Street 1"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            City = "Trondheim",
-                            Name = "Readers Club",
-                            PhoneNumber = "56789123",
-                            PostalCode = "7011",
-                            State = "Trondelag",
-                            StreetAddress = "Bahbat Street 1"
-                        });
                 });
 
             modelBuilder.Entity("Netthandel.Models.Product", b =>
@@ -470,38 +441,12 @@ namespace Netthandel.DataAccess.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Netthandel.Models.ShoppingCart", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("ApplicationUserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Count")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ShoppingCarts");
-                });
-
             modelBuilder.Entity("Netthandel.Models.ApplicationUser", b =>
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
 
                     b.Property<string>("City")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("CompanyId")
-                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -515,8 +460,6 @@ namespace Netthandel.DataAccess.Migrations
 
                     b.Property<string>("StreetAddress")
                         .HasColumnType("nvarchar(max)");
-
-                    b.HasIndex("CompanyId");
 
                     b.HasDiscriminator().HasValue("ApplicationUser");
                 });
@@ -581,15 +524,6 @@ namespace Netthandel.DataAccess.Migrations
                         .IsRequired();
 
                     b.Navigation("Category");
-                });
-
-            modelBuilder.Entity("Netthandel.Models.ApplicationUser", b =>
-                {
-                    b.HasOne("Netthandel.Models.Company", "Company")
-                        .WithMany()
-                        .HasForeignKey("CompanyId");
-
-                    b.Navigation("Company");
                 });
 #pragma warning restore 612, 618
         }

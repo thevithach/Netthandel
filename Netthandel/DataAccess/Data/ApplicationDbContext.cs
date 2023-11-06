@@ -11,9 +11,11 @@ public class ApplicationDbContext : IdentityDbContext<IdentityUser> //Arver fra 
     {
         
     }
+    public DbSet<Company> Companies { get; set; }
     public DbSet<Category> Categories { get; set; }
     public DbSet<Product> Products { get; set; }
     public DbSet<ApplicationUser> ApplicationUsers { get; set; }
+    public DbSet<ShoppingCart> ShoppingCarts { get; set; }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
@@ -21,6 +23,39 @@ public class ApplicationDbContext : IdentityDbContext<IdentityUser> //Arver fra 
             new Category { Id = 1, Name = "Action", DisplayOrder = 1 },
             new Category { Id = 2, Name = "SciFi", DisplayOrder = 2 },
             new Category { Id = 3, Name = "History", DisplayOrder = 3 }
+
+        );
+        modelBuilder.Entity<Company>().HasData(
+            new Company { 
+                Id = 1,
+                Name = "Vivid Books", 
+                StreetAddress = "Gahba Street 1",
+                City = "Kristiansand",
+                State = "Agder",
+                PostalCode = "4611",
+                PhoneNumber = "12345678",
+                
+            },
+            new Company { 
+                Id = 2,
+                Name = "Tech Solution", 
+                StreetAddress = "Lahmoot Street 1",
+                City = "Oslo",
+                State = "OsloFylke",
+                PostalCode = "0011",
+                PhoneNumber = "87654321",
+                
+            },    
+            new Company { 
+                Id = 3,
+                Name = "Readers Club", 
+                StreetAddress = "Bahbat Street 1",
+                City = "Trondheim",
+                State = "Trondelag",
+                PostalCode = "7011",
+                PhoneNumber = "56789123",
+                
+            }
 
         );
         modelBuilder.Entity<Product>().HasData(
