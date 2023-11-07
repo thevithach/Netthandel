@@ -12,8 +12,8 @@ using Netthandel.DataAccess.Data;
 namespace Netthandel.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231106195540_AddShoppingCartToDb")]
-    partial class AddShoppingCartToDb
+    [Migration("20231106201324_addShoppingCartToDb")]
+    partial class addShoppingCartToDb
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -493,6 +493,8 @@ namespace Netthandel.DataAccess.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ProductId");
+
                     b.ToTable("ShoppingCarts");
                 });
 
@@ -584,6 +586,17 @@ namespace Netthandel.DataAccess.Migrations
                         .IsRequired();
 
                     b.Navigation("Category");
+                });
+
+            modelBuilder.Entity("Netthandel.Models.ShoppingCart", b =>
+                {
+                    b.HasOne("Netthandel.Models.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("Netthandel.Models.ApplicationUser", b =>

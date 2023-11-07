@@ -490,6 +490,8 @@ namespace Netthandel.DataAccess.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ProductId");
+
                     b.ToTable("ShoppingCarts");
                 });
 
@@ -581,6 +583,17 @@ namespace Netthandel.DataAccess.Migrations
                         .IsRequired();
 
                     b.Navigation("Category");
+                });
+
+            modelBuilder.Entity("Netthandel.Models.ShoppingCart", b =>
+                {
+                    b.HasOne("Netthandel.Models.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("Netthandel.Models.ApplicationUser", b =>

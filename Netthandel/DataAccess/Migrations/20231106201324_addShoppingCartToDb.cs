@@ -5,7 +5,7 @@
 namespace Netthandel.DataAccess.Migrations
 {
     /// <inheritdoc />
-    public partial class AddShoppingCartToDb : Migration
+    public partial class addShoppingCartToDb : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -23,7 +23,18 @@ namespace Netthandel.DataAccess.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ShoppingCarts", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ShoppingCarts_Products_ProductId",
+                        column: x => x.ProductId,
+                        principalTable: "Products",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ShoppingCarts_ProductId",
+                table: "ShoppingCarts",
+                column: "ProductId");
         }
 
         /// <inheritdoc />
