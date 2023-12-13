@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Netthandel.DataAccess.Repository.IRepository;
 using Netthandel.Models;
+using Netthandel.Utility;
 
 namespace Netthandel.Areas.Customer.Controllers;
 [Area("Customer")]
@@ -49,14 +50,16 @@ public class HomeController : Controller
         {
             cartFromDb.Count += shoppingCart.Count;
             _unitOfWork.ShoppingCart.Update(cartFromDb);
+            _unitOfWork.Save();
         }
         else
         {
             _unitOfWork.ShoppingCart.Add(shoppingCart);
-
+            _unitOfWork.Save();
+            HttpContext.Session.SetInt32(SD.SessionCart, 
+                _unitOfWork.ShoppingCart.GetAll(u => u.ApplicationUserId == userId).Count());
         }
         TempData["Success"] = " Cart updated successfully";
-        _unitOfWork.Save();
         return RedirectToAction(nameof(Index));
     }
 

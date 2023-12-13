@@ -169,7 +169,7 @@ public class OrderController : Controller
         return new StatusCodeResult(303); //redirect to url
     }
     
-    public IActionResult OrderConfirmation(int orderHeaderId)
+    public IActionResult PaymentConfirmation(int orderHeaderId)
     {
         OrderHeader orderHeader = _unitOfWork.OrderHeader.Get(u => u.Id == orderHeaderId);
         if(orderHeader.PaymentStatus == SD.PaymentStatusDelayedPayment)
